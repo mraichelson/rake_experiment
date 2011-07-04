@@ -1,0 +1,5 @@
+source "http://rubygems.org/"
+# gem "jslint"
+# gem "juicer"
+gem "w3c_validators"
+gem "nokogiri"

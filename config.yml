@@ -1,0 +1,41 @@
+##
+# CONFIG.YAML - Some baseline configuration options for the files that will be managed.
+##
+---
+stylesheets:
+  path: _source/css/ 
+  export: _build/css/
+  css: 
+  - files: 
+    - reset.css
+    - 960.css
+    - text.css
+    - project.css
+    filename: screen.css
+  - files: 
+    - reset.css
+    - text.css
+    - project-print.css
+    filename: print.css
+  # Examples for smartphone and handheld
+  # - files:
+  #   - reset.css
+  #   - text.css
+  #   - project-smartphone.css
+  #   filename: smartphone.css
+  # - files:
+  #   - reset.css
+  #   - text.css
+  #   - project-handheld.css
+  #   filename: handheld.css
+scripts: 
+  path: _source/js/
+  export: _build/js/
+  scripts: 
+  - files: 
+    - jquery-1.6.2.min.js
+    - project.js
+    filename: main.js
+  - files: 
+    - page-end.js
+    filename: body.js
