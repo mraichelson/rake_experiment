@@ -88,7 +88,10 @@ namespace :test do
         filepath = config['scripts']['path']
         js_file = filepath + file
         # bouncing this out to the shell isn't an efficient way of doing this...
-        sh "juicer verify " + js_file
+        # sh "juicer verify " + js_file
+        js = File.read(js_file)
+        puts js
+        
       }
     }
     puts "--^--"
