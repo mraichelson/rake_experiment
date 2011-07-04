@@ -2,8 +2,9 @@
 # Some project level configuration is stored in CONFIG.YML
 ##
 require 'rubygems'
-require 'yaml'
+require 'nokogiri'
 require 'w3c_validators'
+require 'yaml'
 include W3CValidators
 
 config = YAML::load(File.open('config.yml'))
@@ -21,23 +22,23 @@ namespace :build do
       }
       
     }
-  end
+  end # end BUILD:CSS
   
   desc "Build HTML files from Source"
   task :html do
     puts " => Building HTML files."
-  end
+  end # end BUILD:HTML
   
   desc "Merge and compress JS files"
   task :js do
     puts " => Merging and Compressing JS files."
-  end
+  end # end BUILD:JS
 
   desc "Perform all Front-End build tasks"
   task :all => [:css, :js, :html] do
     puts " => Performed all Build tasks."
-  end
-end
+  end # end BUILD:ALL
+end # end of BUILD tasks
 
 # automated testing is something we should be considering
 namespace :test do
@@ -66,7 +67,7 @@ namespace :test do
       }
     }
     puts "--^--"
-  end
+  end # end TEST:CSS
 
   desc "Test HTML files with W3c validator."
   task :html do
@@ -74,7 +75,7 @@ namespace :test do
     puts "--v--"
     # for 
     puts "--^--"
-  end
+  end # end TEST:HTML
 
   desc "Test JS files with JSLint"
   task :js do
@@ -95,32 +96,38 @@ namespace :test do
       }
     }
     puts "--^--"
-    # puts "-- JS Validation Results --"
-    # sh   "juicer verify ./_source/js/project.js"
-    # puts "-- JS Validation Results --"
-  end
+  end # end TEST:JS
 
   desc "Perform all Test tasks"
   task :all => [:css, :html, :js] do 
     puts " => Performed all Test tasks."
-  end
-end
+  end # end TEST:ALL
+end # end of TEST tasks
+
+# image management tasks
+namespace :img do
+  desc "Compress image files with ImageOptim"
+  task :compress do
+    puts " => Launching ImageOptim to compress image files."
+    sh   "open -a ImageOptim.app "
+  end # end IMG:COMPRESS
+end # end of IMG tasks
 
 # version control tasks for Subversion
 namespace :svn do
   desc "Create a new tagged release in Subversion"
   task :tag do
     puts " => Creating new SVN Tag for this release."
-  end
-end
+  end # end SVN:TAG
+end # end of SVN tasks
 
 # version control tasks for Git
 namespace :git do
   desc "Create a new tagged release in Git"
   task :tag do
     puts " => Creating a new Git Tag for this release."
-  end
-end
+  end # end GIT:TAG
+end #end of GIT tasks
 
 
 namespace :setup do
@@ -131,11 +138,7 @@ namespace :setup do
     sh   "juicer install yui_compressor"
     sh   "juicer install jslint"
     puts " => Done installing dependencies"
-  end  
-end
+  end # end SETUP:INSTALL
+end # end of SETUP tasks
 
 task :default => "build:all"
-
-###
-# Ruby Helpers
-##
