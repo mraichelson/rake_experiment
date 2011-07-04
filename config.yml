@@ -37,9 +37,9 @@ stylesheets:
 scripts: 
   path: _source/js/
   export: _build/js/
-  scripts: 
+  js: 
   - files: 
-    - jquery-1.6.2.min.js
+    # - jquery-1.6.2.min.js #skipping this for now until i get a better handle on feeding jslint params via juicer.
     - project.js
     filename: main.js
   # - files: 

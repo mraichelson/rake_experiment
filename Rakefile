@@ -19,6 +19,7 @@ namespace :build do
       key['files'].each { |file|
         puts ' => ' + file
       }
+      
     }
   end
   
@@ -78,9 +79,22 @@ namespace :test do
   desc "Test JS files with JSLint"
   task :js do
     puts " => Testing JS files with JSLint."
-    puts "-- JS Validation Results --"
-    sh   "juicer verify ./_source/js/project.js"
-    puts "-- JS Validation Results --"
+    puts "--v--"
+    config['scripts']['js'].each { |key|
+      export_file = key['filename']
+      puts 'Testing components of: ' + export_file
+      key['files'].each { |file|
+        puts ' => Validating ' + file
+        filepath = config['scripts']['path']
+        js_file = filepath + file
+        # bouncing this out to the shell isn't an efficient way of doing this...
+        sh "juicer verify " + js_file
+      }
+    }
+    puts "--^--"
+    # puts "-- JS Validation Results --"
+    # sh   "juicer verify ./_source/js/project.js"
+    # puts "-- JS Validation Results --"
   end
 
   desc "Perform all Test tasks"
