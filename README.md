@@ -22,19 +22,20 @@ To consider:
   * @depends directive in JS comment block for what files to merge combined with Nokogiri stripping of excess SCRIPT tags could be a way to manage what scripts get included where and in what format. 
   * @import directives in CSS are processed into a single file, so a single LINK to an file using multiple @imports for local dev would be a single LINK to a single merged file in the build environment.
 
-## Gems to definitely use: 
+## Gems and stuff: 
 
+### Definitely needs...
 * Rake (duh)
 * Juicer
 * Yaml
 * Nokogiri
 * W3c_validators
 
-## Juicer config: 
+### Juicer config... 
 
 * juicer install yui_compressor
 * juicer install jslint
 
-## Possibly use: 
+### Possibly use... 
 
 * Bundler (http://gembundler.com/)
