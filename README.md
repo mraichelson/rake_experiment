@@ -1,5 +1,17 @@
 # Build Script Experiment
 
+## What I'd like it to do...
+
+* Merge and compress JS files.
+* Merge and compress CSS files.
+* Remove and/or rewrite excess CSS/JS file references used in HTML files.
+* Test CSS files for W3c validation.
+* Test JS files using JSLint.
+* Test HTML files for W3c validation.
+* ? Test CSS files with CSSLint? (This never really goes well for me.)
+* Provide a simplified way of generating a SVN/Git tag for different releases of code.
+* Provide a hook into ImageOptim for triggering compression of image files.
+
 Todo: 
 
 * a bunch of stuff...

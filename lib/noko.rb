@@ -7,6 +7,7 @@ f = File.open("../_source/html/01-pageTypeX.html")
 f.close
 
 puts ' '
+puts '-- ORIGINAL FILE CONTENT --'
 puts @doc.to_html
 
 #remove managed CSS files
@@ -21,5 +22,6 @@ managed_scripts.remove
 # ? replace the placeholder for JS files
 
 puts ' '
+puts '-- MODIFIED FILE CONTENT --'
 puts @doc.to_html
 puts ' '

@@ -1,5 +1,5 @@
 ##
-# CONFIG.YAML - Some baseline configuration options for the files that will be managed.
+# CONFIG.YML - Some baseline configuration options for the files that will be managed.
 ##
 ---
 html:

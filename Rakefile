@@ -109,7 +109,7 @@ namespace :img do
   desc "Compress image files with ImageOptim"
   task :compress do
     puts " => Launching ImageOptim to compress image files."
-    sh   "open -a ImageOptim.app "
+    sh   "open -a ImageOptim.app " + config['images']['path']
   end # end IMG:COMPRESS
 end # end of IMG tasks
 
@@ -138,7 +138,16 @@ namespace :setup do
     sh   "juicer install yui_compressor"
     sh   "juicer install jslint"
     puts " => Done installing dependencies"
+    puts " => You'll need to install ImageOptim to use the image compression tasks."
+    sh   "open http://imageoptim.pornel.net/"
   end # end SETUP:INSTALL
 end # end of SETUP tasks
+
+desc "Output a list of Rake tasks"
+task :help do
+  puts ''
+  sh "rake -T"
+  puts ''
+end # end of HELP
 
 task :default => "build:all"
