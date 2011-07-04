@@ -1,14 +1,25 @@
 ##
 # Some project level configuration is stored in CONFIG.YML
 ##
-require 'json'
-config_file = 'config.json'
+require 'rubygems'
+require 'yaml'
+require 'w3c_validators'
+include W3CValidators
+
+config = YAML::load(File.open('config.yml'))
 
 # project build tasks
 namespace :build do
   desc "Merge and compress CSS files"
   task :css do
     puts " => Merging and Compressing CSS files."
+    config['stylesheets']['css'].each { |key|
+      export_file = key['filename']
+      puts 'Create file: ' + export_file
+      key['files'].each { |file|
+        puts ' => ' + file
+      }
+    }
   end
   
   desc "Build HTML files from Source"
@@ -32,15 +43,36 @@ namespace :test do
   desc "Test CSS files with W3c validator"
   task :css do
     puts " => Testing CSS files with W3c validator."
-    puts "-- CSS Validation Results --"
-    puts "-- CSS Validation Results --"
+    puts "--v--"
+    config['stylesheets']['css'].each { |key|
+      export_file = key['filename']
+      puts 'Testing components of: ' + export_file
+      key['files'].each { |file|
+        puts ' => Validating ' + file
+        validator = CSSValidator.new
+        filepath = config['stylesheets']['path']
+        # puts @filepath + file
+        css_file = File.open(filepath + file)
+        results = validator.validate_file(css_file)
+        if results.errors.length > 0
+          puts '    x-> ERRORS FOUND! :('
+          results.errors.each do |err|
+            puts err.to_s
+          end
+        else
+          puts '    +-> File is Valid! :)'
+        end
+      }
+    }
+    puts "--^--"
   end
 
   desc "Test HTML files with W3c validator."
   task :html do
     puts " => Testing HTML files with W3c validator."
-    puts "-- HTML Validation Results --"
-    puts "-- HTML Validation Results --"
+    puts "--v--"
+    # for 
+    puts "--^--"
   end
 
   desc "Test JS files with JSLint"

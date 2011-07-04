@@ -2,6 +2,12 @@
 # CONFIG.YAML - Some baseline configuration options for the files that will be managed.
 ##
 ---
+html:
+  path: _source/html/
+  export: _build/html/
+images:
+  path: _source/img/
+  export: _build/img/
 stylesheets:
   path: _source/css/ 
   export: _build/css/
