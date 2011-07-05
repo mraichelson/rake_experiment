@@ -116,6 +116,10 @@ namespace :img do
     puts " => Launching ImageOptim to compress image files."
     sh   "open -a ImageOptim.app " + config['images']['path']
   end # end IMG:COMPRESS
+  desc "Sync image directory from SOURCE to BUILD"
+  task :sync do
+    puts " => Syncing SOURCE images to BUILD images"
+  end
 end # end of IMG tasks
 
 # version control tasks for Subversion
