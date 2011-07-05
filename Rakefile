@@ -11,9 +11,10 @@ config = YAML::load(File.open('config.yml'))
 
 # project build tasks
 namespace :build do
-  desc "Merge and compress CSS files"
+  desc 'Merge and compress CSS files'
   task :css do
-    puts " => Merging and Compressing CSS files."
+    puts ''
+    puts ' => Merging and Compressing CSS files.'
     config['stylesheets']['css'].each { |key|
       export_file = key['filename']
       puts 'Create file: ' + export_file
@@ -24,28 +25,32 @@ namespace :build do
     }
   end # end BUILD:CSS
   
-  desc "Build HTML files from Source"
+  desc 'Build HTML files from Source'
   task :html do
-    puts " => Building HTML files."
+    puts ''
+    puts ' => Building HTML files.'
   end # end BUILD:HTML
   
-  desc "Merge and compress JS files"
+  desc 'Merge and compress JS files'
   task :js do
-    puts " => Merging and Compressing JS files."
+    puts ''
+    puts ' => Merging and Compressing JS files.'
   end # end BUILD:JS
 
-  desc "Perform all Front-End build tasks"
+  desc 'Perform all Front-End build tasks'
   task :all => [:css, :js, :html] do
-    puts " => Performed all Build tasks."
+    puts ''
+    puts ' => Performed all Build tasks.'
+    puts '    (Should you be running IMG:SYNC too?)'
   end # end BUILD:ALL
 end # end of BUILD tasks
 
 # automated testing is something we should be considering
 namespace :test do
-  desc "Test CSS files with W3c validator"
+  desc 'Test CSS files with W3c validator'
   task :css do
     puts ''
-    puts " => Testing CSS files with W3c validator."
+    puts ' => Testing CSS files with W3c validator.'
     puts ''
     config['stylesheets']['css'].each { |key|
       export_file = key['filename']
@@ -71,7 +76,7 @@ namespace :test do
         end
       }
     }
-    puts ""
+    puts ''
   end # end TEST:CSS
 
   desc "Test HTML files with W3c validator."
@@ -147,7 +152,7 @@ namespace :setup do
     sh   "juicer install yui_compressor"
     sh   "juicer install jslint"
     puts " => Done installing dependencies"
-    puts " => You'll need to install ImageOptim to use the image compression tasks."
+    puts " => You'll need to install ImageOptim to use the image compression task."
     sh   "open http://imageoptim.pornel.net/"
   end # end SETUP:INSTALL
 end # end of SETUP tasks
