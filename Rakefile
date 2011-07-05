@@ -44,29 +44,34 @@ end # end of BUILD tasks
 namespace :test do
   desc "Test CSS files with W3c validator"
   task :css do
+    puts ''
     puts " => Testing CSS files with W3c validator."
-    puts "--v--"
+    puts ''
     config['stylesheets']['css'].each { |key|
       export_file = key['filename']
-      puts 'Testing components of: ' + export_file
+      puts '  Testing components of: ' + export_file
       key['files'].each { |file|
-        puts ' => Validating ' + file
+        puts '   => Validating ' + file
         validator = CSSValidator.new
         filepath = config['stylesheets']['path']
         # puts @filepath + file
         css_file = File.open(filepath + file)
         results = validator.validate_file(css_file)
         if results.errors.length > 0
-          puts '    x-> ERRORS FOUND! :('
+          puts '      x-> ERRORS FOUND! :('
           results.errors.each do |err|
-            puts err.to_s
+            # puts err.inspect
+            error_text = err.message.to_s
+            error_text = error_text.strip.tr('  ',' ') # this is melting my brain right now
+            puts "          ! Error on Line #{err.line}"
+            puts "            #{error_text}"
           end
         else
-          puts '    +-> File is Valid! :)'
+          puts '      +-> File is Valid! :)'
         end
       }
     }
-    puts "--^--"
+    puts ""
   end # end TEST:CSS
 
   desc "Test HTML files with W3c validator."
@@ -150,4 +155,4 @@ task :help do
   puts ''
 end # end of HELP
 
-task :default => "build:all"
+task :default => "help"
