@@ -166,11 +166,11 @@ namespace :svn do
   task :tag do
     puts ''
     puts ' => Creating new SVN Tag for this release.'
-    build_dir = $config['svn']['export']
-    repo_url = $config['svn']['repo']
+    build_loc = $config['svn']['repo'] + $config['svn']['path'] + $config['svn']['export']
     the_time = Time.now
-    this_tag = 'FrontEnd_' + the_time.strftime('%Y-%m-%dT%H%M')
-    sh "svn copy #{$config['svn']['export']} #{$config['svn']['repo']}tags/#{this_tag}"
+    this_tag = 'FE_' + the_time.strftime('%Y-%m-%dT%H%M')
+    tag_loc = $config['svn']['repo'] + 'tags/' + this_tag
+    sh "svn copy #{build_loc} #{tag_loc} -m 'FE Build Script Autotag'"
   end # end SVN:TAG
 end # end of SVN tasks
 

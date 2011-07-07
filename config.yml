@@ -4,6 +4,7 @@
 ---
 svn:
   repo: https://navartssvn01.navarts.local/svn/NavArts.FEBuildScript.Test/
+  path: trunk/rake_experiment/
   source: _dev/
   export: _build/
 html:
