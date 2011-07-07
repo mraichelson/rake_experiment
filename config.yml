@@ -3,20 +3,20 @@
 ##
 ---
 html:
-  source: _source/html/
+  source: _dev/html/
   export: _build/html/
 images:
-  source: _source/img/
+  source: _dev/img/
   export: _build/img/
 stylesheets:
-  source: _source/css/ 
+  source: _dev/css/ 
   export: _build/css/
   manage:
   - project.css
   validate: 
   - project.css
 scripts: 
-  source: _source/js/
+  source: _dev/js/
   export: _build/js/
   manage:
   - project.js
