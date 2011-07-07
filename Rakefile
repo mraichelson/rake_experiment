@@ -15,13 +15,11 @@ namespace :build do
   task :css do
     puts ''
     puts ' => Merging and Compressing CSS files.'
-    $config['stylesheets']['css'].each { |key|
-      export_file = key['filename']
-      puts 'Create file: ' + export_file
-      key['files'].each { |file|
-        puts ' => ' + file
-      }
-      
+    $config['stylesheets']['manage'].each { |file|
+      source_path = $config['stylesheets']['source']
+      build_path  = $config['stylesheets']['export']
+      puts '    +-> Compressing ' + source_path + file + ' to ' + build_path + file
+      sh   "juicer merge #{source_path}#{file} -o #{build_path}#{file}"
     }
   end # end BUILD:CSS
   
@@ -35,6 +33,13 @@ namespace :build do
   task :js do
     puts ''
     puts ' => Merging and Compressing JS files.'
+    $config['scripts']['manage'].each { |file|
+      source_path = $config['scripts']['source']
+      build_path  = $config['scripts']['export']
+      puts '    +-> Compressing ' + source_path + file + ' to ' + build_path + file
+      # -s flag skips JSLint verification before merging...
+      sh   "juicer merge -s #{source_path}#{file} -o #{build_path}#{file} --force"
+    }
   end # end BUILD:JS
 
   desc 'Perform all Front-End build tasks'
@@ -122,8 +127,9 @@ end # end of TEST tasks
 namespace :img do
   desc "Compress image files with ImageOptim"
   task :compress do
-    puts " => Launching ImageOptim to compress image files."
-    sh   "open -a ImageOptim.app " + config['images']['path']
+    puts ''
+    puts ' => Launching ImageOptim to compress image files.'
+    sh   'open -a ImageOptim.app ' + $config['images']['source']
   end # end IMG:COMPRESS
   desc "Sync image directory from SOURCE to BUILD"
   task :sync do
