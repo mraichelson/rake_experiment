@@ -3,45 +3,30 @@
 ##
 ---
 html:
-  path: _source/html/
+  source: _source/html/
   export: _build/html/
 images:
-  path: _source/img/
+  source: _source/img/
   export: _build/img/
 stylesheets:
-  path: _source/css/ 
+  source: _source/css/ 
   export: _build/css/
-  css: 
-  - files: 
-    - reset.css
-    - 960.css
-    - text.css
-    - project.css
-    filename: screen.css
-  # - files: 
-  #   - reset.css
-  #   - text.css
-  #   - project-print.css
-  #   filename: print.css
-  # Examples for smartphone and handheld
-  # - files:
-  #   - reset.css
-  #   - text.css
-  #   - project-smartphone.css
-  #   filename: smartphone.css
-  # - files:
-  #   - reset.css
-  #   - text.css
-  #   - project-handheld.css
-  #   filename: handheld.css
+  manage:
+  - project.css
+  - print.css
+  - smartphone.css
+  - tablet.css
+  validate: 
+  - project.css
+  - print.css
 scripts: 
-  path: _source/js/
+  source: _source/js/
   export: _build/js/
-  js: 
-  - files: 
-    # - jquery-1.6.2.min.js #skipping this for now until i get a better handle on feeding jslint params via juicer.
-    - project.js
-    filename: main.js
-  # - files: 
-  #   - page-end.js
-  #   filename: body.js
+  manage:
+  - project.js
+  - ie-pngfix.js
+  jslint:
+  - project.js
+  # SOON...well, maybe eventually anyway...
+  # qunit:
+  # - project.js
