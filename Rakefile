@@ -157,13 +157,16 @@ end #end of GIT tasks
 namespace :setup do
   desc "Use Builder to install necessary Gems."
   task :install do
-    puts " => Installing dependency Gems"
-    sh   "bundle install"
-    sh   "juicer install yui_compressor"
-    sh   "juicer install jslint"
-    puts " => Done installing dependencies"
-    puts " => You'll need to install ImageOptim to use the image compression task."
-    sh   "open http://imageoptim.pornel.net/"
+    # puts " => Installing dependency Gems"
+    #     sh   "bundle install"
+    #     sh   "juicer install yui_compressor"
+    #     sh   "juicer install jslint"
+    #     puts " => Done installing dependencies"
+    #     puts " => You'll need to install ImageOptim to use the image compression task."
+    #     sh   "open http://imageoptim.pornel.net/"
+    puts ''
+    puts ' => Hold on, forwarding you to the install instructions. (You need to be in the office or on the VPN for this...)'
+    sh 'open http://km.dev.navarts.local/wiki'
   end # end SETUP:INSTALL
 end # end of SETUP tasks
 
