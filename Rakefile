@@ -7,7 +7,7 @@ require 'w3c_validators'
 require 'yaml'
 include W3CValidators
 
-config = YAML::load(File.open('config.yml'))
+$config = YAML::load(File.open('config.yml'))
 
 # project build tasks
 namespace :build do
@@ -15,7 +15,7 @@ namespace :build do
   task :css do
     puts ''
     puts ' => Merging and Compressing CSS files.'
-    config['stylesheets']['css'].each { |key|
+    $config['stylesheets']['css'].each { |key|
       export_file = key['filename']
       puts 'Create file: ' + export_file
       key['files'].each { |file|
@@ -52,51 +52,60 @@ namespace :test do
     puts ''
     puts ' => Testing CSS files with W3c validator.'
     puts ''
-    config['stylesheets']['css'].each { |key|
-      export_file = key['filename']
-      puts '  Testing components of: ' + export_file
-      key['files'].each { |file|
-        puts '   => Validating ' + file
-        validator = CSSValidator.new
-        filepath = config['stylesheets']['path']
-        # puts @filepath + file
-        css_file = File.open(filepath + file)
-        results = validator.validate_file(css_file)
-        if results.errors.length > 0
-          puts '      x-> ERRORS FOUND! :('
-          results.errors.each do |err|
-            # puts err.inspect
-            error_text = err.message.to_s
-            error_text = error_text.strip.tr('  ',' ') # this is melting my brain right now
-            puts "          ! Error on Line #{err.line}"
-            puts "            #{error_text}"
-          end
-        else
-          puts '      +-> File is Valid! :)'
-        end
-      }
+    $config['stylesheets']['validate'].each { |file_to_test|
+      file_path = $config['stylesheets']['source']
+      puts '    => Validating ' + file_to_test
+      validator = CSSValidator.new
+      css_file = File.open(file_path + file_to_test)
+      results = validator.validate_file(css_file)
+      if results.errors.length > 0
+        puts '       x-> Errors found!'
+        results.errors.each { |err|
+          error_text = err.message.to_s
+          error_text = error_text.strip.tr('  ',' ')
+          puts "           ! Error on line #{err.line}"
+          puts '             ' + error_text
+        }
+      else
+        puts '       +-> File validated successfully. :)'
+      end
     }
     puts ''
   end # end TEST:CSS
 
   desc "Test HTML files with W3c validator."
   task :html do
+    puts ''
     puts " => Testing HTML files with W3c validator."
-    puts "--v--"
-    # for 
-    puts "--^--"
+    puts ''
+    file_path = $config['html']['source']
+    Dir[file_path + '*.html'].each { |file_to_test| 
+      puts '    => Validating ' + file_to_test
+      validator = MarkupValidator.new
+      # validator.set_debug!(true)
+      results = validator.validate_file(file_to_test)
+      if results.errors.length > 0
+        puts '       x-> Errors found in ' + file_to_test + '!'
+        # results.errors.each { |err|
+        #   puts err.to_s
+        # }
+      else
+        puts '       +-> File validated successfully. :)'
+      end
+    }
+    puts ''
   end # end TEST:HTML
 
   desc "Test JS files with JSLint"
   task :js do
     puts " => Testing JS files with JSLint."
     puts "--v--"
-    config['scripts']['js'].each { |key|
+    $config['scripts']['js'].each { |key|
       export_file = key['filename']
       puts 'Testing components of: ' + export_file
       key['files'].each { |file|
         puts ' => Validating ' + file
-        filepath = config['scripts']['path']
+        filepath = $config['scripts']['path']
         js_file = filepath + file
         # bouncing this out to the shell isn't an efficient way of doing this...
         # sh "juicer verify " + js_file
