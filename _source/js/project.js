@@ -11,7 +11,7 @@
 var Project = this.Project || {};
 
 Project.config = {
-  animspeed : 500
+  animspeed : c500
 };
 
 Project.func = {

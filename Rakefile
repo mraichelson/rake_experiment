@@ -63,7 +63,7 @@ namespace :test do
         results.errors.each { |err|
           error_text = err.message.to_s
           error_text = error_text.strip.tr('  ',' ')
-          puts "           ! Error on line #{err.line}"
+          puts '           ! Error on line ' + err.line
           puts '             ' + error_text
         }
       else
@@ -76,7 +76,7 @@ namespace :test do
   desc "Test HTML files with W3c validator."
   task :html do
     puts ''
-    puts " => Testing HTML files with W3c validator."
+    puts ' => Testing HTML files with W3c validator.'
     puts ''
     file_path = $config['html']['source']
     Dir[file_path + '*.html'].each { |file_to_test| 
@@ -86,6 +86,7 @@ namespace :test do
       results = validator.validate_file(file_to_test)
       if results.errors.length > 0
         puts '       x-> Errors found in ' + file_to_test + '!'
+        puts '           (Sorry I can\'t get more specific than that at the moment from the command line. -Mike R)'
         # results.errors.each { |err|
         #   puts err.to_s
         # }
@@ -98,28 +99,22 @@ namespace :test do
 
   desc "Test JS files with JSLint"
   task :js do
-    puts " => Testing JS files with JSLint."
-    puts "--v--"
-    $config['scripts']['js'].each { |key|
-      export_file = key['filename']
-      puts 'Testing components of: ' + export_file
-      key['files'].each { |file|
-        puts ' => Validating ' + file
-        filepath = $config['scripts']['path']
-        js_file = filepath + file
-        # bouncing this out to the shell isn't an efficient way of doing this...
-        # sh "juicer verify " + js_file
-        js = File.read(js_file)
-        puts js
-        
-      }
+    puts ''
+    puts ' => Testing JS files with JSLint.'
+    $config['scripts']['jslint'].each { |file_to_test|
+      file_to_test = $config['scripts']['source'] + file_to_test
+      puts '    => Testing ' + file_to_test + ' with JSLint'
+      # It seems really sideways to me to bounce this back out to another shell command
+      # but I can't find any docs around using Juicer from within other ruby scripts...
+      sh   'juicer verify ' + file_to_test
     }
-    puts "--^--"
   end # end TEST:JS
 
   desc "Perform all Test tasks"
   task :all => [:css, :html, :js] do 
-    puts " => Performed all Test tasks."
+    puts ''
+    puts ' => Performed all Test tasks.'
+    puts ''
   end # end TEST:ALL
 end # end of TEST tasks
 
