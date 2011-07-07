@@ -2,8 +2,10 @@
 # CONFIG.YML - Some baseline configuration options for the files that will be managed.
 ##
 ---
-versioncontrol:
-  svn: 
+svn:
+  repo: https://navartssvn01.navarts.local/svn/NavArts.FEBuildScript.Test/
+  source: _dev/
+  export: _build/
 html:
   source: _dev/html/
   export: _build/html/

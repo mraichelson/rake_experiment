@@ -164,17 +164,23 @@ end # end of IMG tasks
 namespace :svn do
   desc "Create a new tagged release in Subversion"
   task :tag do
-    puts " => Creating new SVN Tag for this release."
+    puts ''
+    puts ' => Creating new SVN Tag for this release.'
+    build_dir = $config['svn']['export']
+    repo_url = $config['svn']['repo']
+    the_time = Time.now
+    this_tag = 'FrontEnd_' + the_time.strftime('%Y-%m-%dT%H%M')
+    sh "svn copy #{$config['svn']['export']} #{$config['svn']['repo']}tags/#{this_tag}"
   end # end SVN:TAG
 end # end of SVN tasks
 
 # version control tasks for Git
-namespace :git do
-  desc "Create a new tagged release in Git"
-  task :tag do
-    puts " => Creating a new Git Tag for this release."
-  end # end GIT:TAG
-end #end of GIT tasks
+#namespace :git do
+#  desc "Create a new tagged release in Git"
+#  task :tag do
+#    puts " => Creating a new Git Tag for this release."
+#  end # end GIT:TAG
+#end #end of GIT tasks
 
 
 namespace :setup do
