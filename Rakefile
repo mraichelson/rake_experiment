@@ -27,6 +27,24 @@ namespace :build do
   task :html do
     puts ''
     puts ' => Building HTML files.'
+    file_path = $config['html']['source']
+    Dir[file_path + '*.html'].each { |file|
+      input_file = file
+      output_file = file.sub($config['html']['source'], $config['html']['export'])
+      puts '    +-> Building ' + input_file + ' to ' + output_file
+      f = File.open(input_file)
+      @doc = Nokogiri::HTML(f)
+      f.close
+      #remove managed CSS files
+      managed_styles = @doc.css('link.managed')
+      managed_styles.remove
+      # remove managed JS files
+      managed_scripts = @doc.css('script.managed')
+      managed_scripts.remove
+      File.open output_file, 'w' do |outfile|
+        outfile.write @doc
+      end
+    }
   end # end BUILD:HTML
   
   desc 'Merge and compress JS files'
