@@ -20,7 +20,7 @@ namespace :build do
       source_path = $config['stylesheets']['source']
       build_path  = $config['stylesheets']['export']
       puts '    +-> Compressing ' + source_path + file + ' to ' + build_path + file
-      sh   "juicer merge #{source_path}#{file} -o #{build_path}#{file}"
+      sh   "juicer merge #{source_path}#{file} -o #{build_path}#{file} --force"
     }
   end # end BUILD:CSS
   
