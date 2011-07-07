@@ -13,13 +13,18 @@ stylesheets:
   export: _build/css/
   manage:
   - project.css
+  - print.css
+  - smartphone.css
+  - tablet.css
   validate: 
   - project.css
+  - print.css
 scripts: 
   source: _source/js/
   export: _build/js/
   manage:
   - project.js
+  - ie-pngfix.js
   jslint:
   - project.js
   # SOON...well, maybe eventually anyway...
