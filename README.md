@@ -2,40 +2,38 @@
 
 ## What I'd like it to do...
 
-* Merge and compress JS files.
-* Merge and compress CSS files.
-* Remove and/or rewrite excess CSS/JS file references used in HTML files.
-* Test CSS files for W3c validation.
-* Test JS files using JSLint.
-* Test HTML files for W3c validation.
+* Merge and compress JS files. (does this! using Juicer)
+* Merge and compress CSS files. (does this! using Juicer)
+* Remove and/or rewrite excess CSS/JS file references used in HTML files. (does this! using Nokogiri)
+* Test CSS files for W3c validation. (does this! using W3c_validators)
+* Test JS files using JSLint. (does this! using Juicer)
+* Test HTML files for W3c validation. (does this! using W3c_validators)
 * ? Test CSS files with CSSLint? (This never really goes well for me.)
 * Provide a simplified way of generating a SVN/Git tag for different releases of code.
-* Provide a hook into ImageOptim for triggering compression of image files.
+  * SVN (does this!)
+  * Git (since we don't actually use Git for internal version control at the moment I'm going to table this for later.)
+* Provide a hook into ImageOptim for triggering compression of image files. (does this!)
+* Will clone the images directory from the dev structure into the build structure. (does this!)
 
 Todo: 
 
-* a bunch of stuff...
+* Git Tagging support
+* Installation/setup documentation
 
-To consider:
+## Gems and stuff
 
-* Would using Juicer internals for more of the CSS/JS management tasks be a better path?
-  * @depends directive in JS comment block for what files to merge combined with Nokogiri stripping of excess SCRIPT tags could be a way to manage what scripts get included where and in what format. 
-  * @import directives in CSS are processed into a single file, so a single LINK to an file using multiple @imports for local dev would be a single LINK to a single merged file in the build environment.
+(this only needs to be done the FIRST TIME you set this up on your system)
 
-## Gems and stuff: 
+gem install syntax: `sudo gem install {gem name}`
 
-### Definitely needs...
 * Rake (duh)
 * Juicer
 * Yaml
 * Nokogiri
 * W3c_validators
+* Colorizer
 
 ### Juicer config... 
 
 * juicer install yui_compressor
 * juicer install jslint
-
-### Possibly use... 
-
-* Bundler (http://gembundler.com/)
