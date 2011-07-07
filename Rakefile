@@ -64,6 +64,7 @@ namespace :build do
   task :all => [:css, :js, :html] do
     puts ''
     puts ' => Performed all Build tasks.'
+    puts '    (You did TEST first, right?)'
     puts '    (Should you be running IMG:SYNC too?)'
   end # end BUILD:ALL
 end # end of BUILD tasks
@@ -151,7 +152,11 @@ namespace :img do
   end # end IMG:COMPRESS
   desc "Sync image directory from SOURCE to BUILD"
   task :sync do
-    puts " => Syncing SOURCE images to BUILD images"
+    puts ''
+    puts ' => Syncing SOURCE images to BUILD images'
+    source = $config['images']['source']
+    export = $config['images']['export']
+    sh   "rsync -aC #{source} #{export}" #rsync for two local paths. WHO KNEW? 
   end
 end # end of IMG tasks
 
