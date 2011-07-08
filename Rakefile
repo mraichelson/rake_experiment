@@ -113,7 +113,6 @@ namespace :test do
       results = validator.validate_file(file_to_test)
       if results.errors.length > 0
         puts "       x-> Errors found in #{file_to_test}".red
-        puts '           (Sorry I can\'t get more specific than that at the moment from the command line. -Mike R)'
         # results.errors.each { |err|
         #   puts err.to_s
         # }
