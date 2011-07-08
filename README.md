@@ -1,4 +1,4 @@
-# Build Script Experiment
+# Build script experiment
 
 ## What I'd like it to do...
 
@@ -19,20 +19,34 @@ Todo:
 
 * Installation/setup documentation
 
-## Gems and stuff
+## Installation
+
+### Third-party applications
+
+* [ImageOptim](http://imageoptim.pornel.net/)
+
+### Ruby gems
 
 (this only needs to be done the FIRST TIME you set this up on your system)
 
 gem install syntax: `sudo gem install {gem name}`
 
-* Rake
-* Juicer
-* Nokogiri
-* W3c_validators
-* Colorizer
+* [Rake](http://rubyrake.org/)
+* [Juicer](https://github.com/cjohansen/juicer)
+* [Nokogiri](http://nokogiri.org/)
+* [W3c_validators](http://code.dunae.ca/w3c_validators/)
+* [Colorize](http://colorize.rubyforge.org/)
 * Yaml (Yaml is installed by default with Ruby, it does not need to be downloaded.)
 
 ### Juicer config... 
 
 * juicer install yui_compressor
 * juicer install jslint
+
+## External docs that may be of use
+
+Rake tutorials
+
+* [Official Rake documentation tutorial](http://docs.rubyrake.org/tutorial/index.html)
+* [Using the Rake build language](http://martinfowler.com/articles/rake.html)
+* [JasonSeifer.com](http://jasonseifer.com/2010/04/06/rake-tutorial)

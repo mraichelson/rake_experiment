@@ -1,5 +1,7 @@
 ##
 # Some project level configuration is stored in CONFIG.YML
+# Version History
+# => 0.1 Internal testing version (2011-07-07)
 ##
 require 'rubygems'
 require 'nokogiri'
