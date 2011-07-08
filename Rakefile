@@ -21,7 +21,7 @@ namespace :build do
     $config['stylesheets']['manage'].each { |file|
       source_path = $config['stylesheets']['source']
       build_path  = $config['stylesheets']['export']
-      puts '    +-> Compressing ' + source_path + file + ' to ' + build_path + file
+      puts "    +-> ".green + "Building " + "#{source_path}#{file}".yellow + " to " + "#{build_path}#{file}".green
       sh   "juicer merge #{source_path}#{file} -o #{build_path}#{file} --force"
     }
   end # end BUILD:CSS
@@ -34,7 +34,7 @@ namespace :build do
     Dir[file_path + '*.html'].each { |file|
       input_file = file
       output_file = file.sub($config['html']['source'], $config['html']['export'])
-      puts '    +-> Building ' + input_file + ' to ' + output_file
+      puts "    +-> ".green + "Building " + "#{input_file}".yellow + " to " + "#{output_file}".green
       f = File.open(input_file)
       @doc = Nokogiri::HTML(f)
       f.close
@@ -57,7 +57,7 @@ namespace :build do
     $config['scripts']['manage'].each { |file|
       source_path = $config['scripts']['source']
       build_path  = $config['scripts']['export']
-      puts '    +-> Compressing ' + source_path + file + ' to ' + build_path + file
+      puts "    +-> ".green + "Building " + "#{source_path}#{file}".yellow + " to " + "#{build_path}#{file}".green
       # -s flag skips JSLint verification before merging...
       sh   "juicer merge -s #{source_path}#{file} -o #{build_path}#{file} --force"
     }
@@ -69,6 +69,7 @@ namespace :build do
     puts ' => Performed all Build tasks.'.blue.on_green
     puts '    (You did TEST first, right?)'.yellow
     puts '    (Should you be running IMG:SYNC too?)'.yellow
+    puts ''
   end # end BUILD:ALL
 end # end of BUILD tasks
 
@@ -90,8 +91,8 @@ namespace :test do
         results.errors.each { |err|
           error_text = err.message.to_s
           error_text = error_text.strip.tr('  ',' ')
-          puts '           ! Error on line ' + err.line
-          puts '             ' + error_text
+          puts '           !'.red + ' Error on line ' + " #{err.line} ".yellow.on_red
+          puts '             ' + "#{error_text}"
         }
       else
         puts '       +-> File validated successfully. :)'.green
@@ -123,7 +124,7 @@ namespace :test do
     puts ''
   end # end TEST:HTML
 
-  desc "Test JS files with JSLint"
+  desc 'Test JS files with JSLint'
   task :js do
     puts ''
     puts ' => Testing JS files with JSLint.'.blue.on_white
@@ -136,7 +137,7 @@ namespace :test do
     }
   end # end TEST:JS
 
-  desc "Perform all Test tasks"
+  desc 'Perform all Test tasks'
   task :all => [:css, :html, :js] do 
     puts ''
     puts ' => Performed all Test tasks.'.blue.on_green
@@ -146,20 +147,30 @@ end # end of TEST tasks
 
 # image management tasks
 namespace :img do
-  desc "Compress image files with ImageOptim"
+  desc 'Compress image files with ImageOptim'
   task :compress do
     puts ''
     puts ' => Launching ImageOptim to compress image files.'.blue.on_white
     sh   'open -a ImageOptim.app ' + $config['images']['source']
   end # end IMG:COMPRESS
-  desc "Sync image directory from SOURCE to BUILD"
+  
+  desc "Sync image directory from DEV to BUILD"
   task :sync do
     puts ''
-    puts ' => Syncing SOURCE images to BUILD images'.blue.on_white
+    puts ' => Syncing DEV images to BUILD images'.blue.on_white
     source = $config['images']['source']
     export = $config['images']['export']
     sh   "rsync -aC #{source} #{export}" #rsync for two local paths. WHO KNEW? 
-  end
+  end # end of IMG:SYNC
+  
+  desc "Reverse sync image directory from BUILD to DEV"
+  task :backsync do
+    puts ''
+    puts ' => Syncing BUILD images to DEV images'.blue.on_white
+    source = $config['images']['export']
+    export = $config['images']['source']
+    sh   "rsync -aC #{source} #{export}"
+  end # end of IMG:BACKSYNC
 end # end of IMG tasks
 
 # version control tasks for Subversion
@@ -189,7 +200,7 @@ namespace :git do
 end #end of GIT tasks
 
 namespace :setup do
-  desc "Use Builder to install necessary Gems."
+  desc "Explain what needs to happen to properly install the Rakefile."
   task :install do
     # puts " => Installing dependency Gems"
     #     sh   "bundle install"
