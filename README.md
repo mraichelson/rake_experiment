@@ -11,7 +11,7 @@
 * ? Test CSS files with CSSLint? (This never really goes well for me.)
 * Provide a simplified way of generating a SVN/Git tag for different releases of code.
   * SVN (does this!)
-  * Git (since we don't actually use Git for internal version control at the moment I'm going to table this for later.)
+  * Git (does this!)
 * Provide a hook into ImageOptim for triggering compression of image files. (does this!)
 * Will clone the images directory from the dev structure into the build structure. (does this!)
 
