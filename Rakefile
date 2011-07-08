@@ -176,12 +176,16 @@ namespace :svn do
 end # end of SVN tasks
 
 # version control tasks for Git
-#namespace :git do
-#  desc "Create a new tagged release in Git"
-#  task :tag do
-#    puts " => Creating a new Git Tag for this release."
-#  end # end GIT:TAG
-#end #end of GIT tasks
+namespace :git do
+  desc "Create a new tagged release in Git"
+  task :tag do
+    puts ''
+    puts ' => Creating new Git Tag for this release.'.blue.on_white
+    the_time = Time.now
+    this_tag = "FE_" + the_time.strftime('%Y-%m-%dT%H%M')
+    sh "git tag #{this_tag}"
+  end # end GIT:TAG
+end #end of GIT tasks
 
 
 namespace :setup do
