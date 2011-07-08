@@ -17,7 +17,6 @@
 
 Todo: 
 
-* Git Tagging support
 * Installation/setup documentation
 
 ## Gems and stuff
@@ -26,12 +25,12 @@ Todo:
 
 gem install syntax: `sudo gem install {gem name}`
 
-* Rake (duh)
+* Rake
 * Juicer
-* Yaml
 * Nokogiri
 * W3c_validators
 * Colorizer
+* Yaml (Yaml is installed by default with Ruby, it does not need to be downloaded.)
 
 ### Juicer config... 
 

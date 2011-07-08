@@ -187,7 +187,6 @@ namespace :git do
   end # end GIT:TAG
 end #end of GIT tasks
 
-
 namespace :setup do
   desc "Use Builder to install necessary Gems."
   task :install do
@@ -199,7 +198,7 @@ namespace :setup do
     #     puts " => You'll need to install ImageOptim to use the image compression task."
     #     sh   "open http://imageoptim.pornel.net/"
     puts ''
-    puts ' => Hold on, forwarding you to the install instructions.'.blue.on_white
+    puts ' => Hold on, forwarding you to the install instructions.    '.blue.on_white
     puts '    (You need to be in the office or on the VPN for this...)'.blue.on_white
     sh 'open http://km.dev.navarts.local/wiki'
   end # end SETUP:INSTALL
