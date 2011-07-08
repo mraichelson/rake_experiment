@@ -64,7 +64,7 @@ namespace :build do
   end # end BUILD:JS
 
   desc 'Perform all Front-End build tasks'
-  task :all => [:css, :js, :html] do
+  task :all => [:css, :html, :js] do
     puts ''
     puts ' => Performed all Build tasks.'.blue.on_green
     puts '    (You did TEST first, right?)'.yellow
