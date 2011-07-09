@@ -41,8 +41,8 @@ gem install syntax: `sudo gem install {gem name}`
 
 ### Juicer config... 
 
-* juicer install yui_compressor
-* juicer install jslint
+* `juicer install yui_compressor`
+* `juicer install jslint`
 
 ## External docs that may be of use
 
