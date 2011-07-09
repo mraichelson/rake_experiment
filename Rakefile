@@ -44,8 +44,12 @@ namespace :build do
       # remove managed JS files
       managed_scripts = @doc.css('script.managed')
       managed_scripts.remove
+      # nokogiri adds an additional META for content-type
+      extra_meta = @doc.css('meta[http-equiv = "Content-Type"]')
+      #extra_meta = @doc.css('head meta[http-equiv]')
+      extra_meta.remove
       File.open output_file, 'w' do |outfile|
-        outfile.write @doc
+        outfile.write @doc.to_html(:indent => 2)
       end
     }
   end # end BUILD:HTML
