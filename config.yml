@@ -1,6 +1,9 @@
 ##
 # CONFIG.YML - Some baseline configuration options for the files that will be managed.
 # There's a lot of duplication in here, I'd like to find a way to simplify things in the future. -MR
+#
+# Version History
+# => 0.1 Internal testing version (2011-07-07)
 ##
 ---
 svn:
