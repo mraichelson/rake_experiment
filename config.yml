@@ -27,6 +27,3 @@ scripts:
   - project.js
   jslint:
   - project.js
-  # SOON...well, maybe eventually anyway...
-  # qunit:
-  # - project.js
