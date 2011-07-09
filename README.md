@@ -23,7 +23,7 @@ Todo:
 
 ### Third-party applications
 
-* [ImageOptim](http://imageoptim.pornel.net/)
+* [ImageOptim](http://imageoptim.pornel.net/) (used for image compression)
 
 ### Ruby gems
 
