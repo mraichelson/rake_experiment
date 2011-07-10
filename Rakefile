@@ -218,7 +218,8 @@ task :setup do
   puts ' => Hold on, forwarding you to the install instructions.     '.blue.on_white
   puts '    (You need to be in the office or on the VPN for this...) '.blue.on_white
   puts ''
-  `open http://km.dev.navarts.local/wiki`
+  # `open http://km.dev.navarts.local/wiki`
+  `open https://www.github.com/mraichelson/rake_experiment`
 end # end SETUP
 
 desc "Output a list of Rake tasks"
