@@ -134,6 +134,7 @@ namespace :test do
     $config['scripts']['jslint'].each { |file_to_test|
       file_to_test = $config['scripts']['source'] + file_to_test
       puts '    => Testing ' + file_to_test + ' with JSLint'
+      puts ''
       # It seems really sideways to me to bounce this back out to another shell command
       # but I can't find any docs around using Juicer from within other ruby scripts...
       sh   'juicer verify ' + file_to_test
