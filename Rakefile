@@ -19,25 +19,26 @@ namespace :build do
   task :css do
     puts ''
     puts ' => Merging and Compressing CSS files.'.blue.on_white
+    puts ''
     $config['stylesheets']['manage'].each { |file|
       source_path = $config['stylesheets']['source']
       build_path  = $config['stylesheets']['export']
       puts "    +-> ".green + "Building " + "#{source_path}#{file}".yellow + " to " + "#{build_path}#{file}".green
-      sh   "juicer merge #{source_path}#{file} -o #{build_path}#{file} --force"
+      `juicer merge #{source_path}#{file} -o #{build_path}#{file} --force`
     }
+    puts ''
   end # end BUILD:CSS
   
   desc 'Build HTML files from Source'
   task :html do
     puts ''
     puts ' => Building HTML files.'.blue.on_white
+    puts ''
     file_path = $config['html']['source']
     Dir[file_path + '*.html'].each { |file|
       input_file = file
       output_file = file.sub($config['html']['source'], $config['html']['export'])
       puts "    +-> ".green + "Building " + "#{input_file}".yellow + " to " + "#{output_file}".green
-      
-      ## let's try document parsing with hpricot instead. 
       f = File.open(input_file)
       @doc = Hpricot(f)
       @doc.search('link.managed').remove
@@ -45,41 +46,23 @@ namespace :build do
       File.open output_file, 'w' do |outfile|
         outfile.write @doc.to_original_html.gsub(/^\s*$\n/,'')
       end
-      
-      ## this code does document processing with Nokogiri, but I'm not happy with 
-      ## the things it's doing with the HTML output. (not preserving indentation
-      ## properly, adding an additional META tag for UTF-8 encoding in addition to 
-      ## the HTML5 one which is already in place in the source file.)
-      #       f = File.open(input_file)
-      #       @doc = Nokogiri::HTML(f)
-      #       f.close
-      #       #remove managed CSS files
-      #       managed_styles = @doc.css('link.managed')
-      #       managed_styles.remove
-      #       # remove managed JS files
-      #       managed_scripts = @doc.css('script.managed')
-      #       managed_scripts.remove
-      #       # nokogiri adds an additional META for content-type
-      #       extra_meta = @doc.css('meta[http-equiv = "Content-Type"]')
-      #       extra_meta.remove
-      #       File.open output_file, 'w' do |outfile|
-      #         outfile.write @doc.to_html
-      #       end
-      
     }
+    puts ''
   end # end BUILD:HTML
   
   desc 'Merge and compress JS files'
   task :js do
     puts ''
     puts ' => Merging and Compressing JS files.'.blue.on_white
+    puts ''
     $config['scripts']['manage'].each { |file|
       source_path = $config['scripts']['source']
       build_path  = $config['scripts']['export']
       puts "    +-> ".green + "Building " + "#{source_path}#{file}".yellow + " to " + "#{build_path}#{file}".green
       # -s flag skips JSLint verification before merging...
-      sh   "juicer merge -s #{source_path}#{file} -o #{build_path}#{file} --force"
+      `juicer merge -s #{source_path}#{file} -o #{build_path}#{file} --force`
     }
+    puts ''
   end # end BUILD:JS
 
   desc 'Perform all Front-End build tasks'
@@ -147,6 +130,7 @@ namespace :test do
   task :js do
     puts ''
     puts ' => Testing JS files with JSLint.'.blue.on_white
+    puts ''
     $config['scripts']['jslint'].each { |file_to_test|
       file_to_test = $config['scripts']['source'] + file_to_test
       puts '    => Testing ' + file_to_test + ' with JSLint'
@@ -154,6 +138,7 @@ namespace :test do
       # but I can't find any docs around using Juicer from within other ruby scripts...
       sh   'juicer verify ' + file_to_test
     }
+    puts ''
   end # end TEST:JS
 
   desc 'Perform all Test tasks'
@@ -170,25 +155,31 @@ namespace :img do
   task :compress do
     puts ''
     puts ' => Launching ImageOptim to compress image files.'.blue.on_white
-    sh   'open -a ImageOptim.app ' + $config['images']['source']
+    puts ''
+    cmd = 'open -a ImageOptim.app ' + $config['images']['source']
+    `#{cmd}`
   end # end IMG:COMPRESS
   
   desc "Sync image directory from DEV to BUILD"
   task :sync do
     puts ''
     puts ' => Syncing DEV images to BUILD images'.blue.on_white
+    puts ''
     source = $config['images']['source']
     export = $config['images']['export']
-    sh   "rsync -aC #{source} #{export}" #rsync for two local paths. WHO KNEW? 
+    cmd = "rsync -aC #{source} #{export}" #rsync for two local paths. WHO KNEW? 
+    `#{cmd}`
   end # end of IMG:SYNC
   
   desc "Reverse sync image directory from BUILD to DEV"
   task :backsync do
     puts ''
     puts ' => Syncing BUILD images to DEV images'.blue.on_white
+    puts ''
     source = $config['images']['export']
     export = $config['images']['source']
-    sh   "rsync -aC #{source} #{export}"
+    cmd = "rsync -aC #{source} #{export}"
+    `#{cmd}`
   end # end of IMG:BACKSYNC
 end # end of IMG tasks
 
@@ -198,11 +189,12 @@ namespace :svn do
   task :tag do
     puts ''
     puts ' => Creating new SVN Tag for this release.'.blue.on_white
+    puts ''
     build_loc = $config['svn']['repo'] + $config['svn']['path'] + $config['svn']['export']
     the_time = Time.now
     this_tag = 'FE_' + the_time.strftime('%Y-%m-%dT%H%M')
     tag_loc = $config['svn']['repo'] + 'tags/' + this_tag
-    sh "svn copy #{build_loc} #{tag_loc} -m 'FE Build Script Autotag'"
+    `svn copy #{build_loc} #{tag_loc} -m 'FE Build Script Autotag'`
   end # end SVN:TAG
 end # end of SVN tasks
 
@@ -212,28 +204,22 @@ namespace :git do
   task :tag do
     puts ''
     puts ' => Creating new Git Tag for this release.'.blue.on_white
+    puts ''
     the_time = Time.now
     this_tag = "FE_" + the_time.strftime('%Y-%m-%dT%H%M')
-    sh "git tag #{this_tag}"
+    `git tag #{this_tag}`
   end # end GIT:TAG
 end #end of GIT tasks
 
-namespace :setup do
-  desc "Explain what needs to happen to properly install the Rakefile."
-  task :install do
-    # puts " => Installing dependency Gems"
-    #     sh   "bundle install"
-    #     sh   "juicer install yui_compressor"
-    #     sh   "juicer install jslint"
-    #     puts " => Done installing dependencies"
-    #     puts " => You'll need to install ImageOptim to use the image compression task."
-    #     sh   "open http://imageoptim.pornel.net/"
-    puts ''
-    puts ' => Hold on, forwarding you to the install instructions.    '.blue.on_white
-    puts '    (You need to be in the office or on the VPN for this...)'.blue.on_white
-    sh 'open http://km.dev.navarts.local/wiki'
-  end # end SETUP:INSTALL
-end # end of SETUP tasks
+# setup help documentation
+desc "Explain what needs to happen to properly install the Rakefile."
+task :setup do
+  puts ''
+  puts ' => Hold on, forwarding you to the install instructions.     '.blue.on_white
+  puts '    (You need to be in the office or on the VPN for this...) '.blue.on_white
+  puts ''
+  `open http://km.dev.navarts.local/wiki`
+end # end SETUP
 
 desc "Output a list of Rake tasks"
 task :help do
