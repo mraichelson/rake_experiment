@@ -43,7 +43,7 @@ namespace :build do
       @doc.search('link.managed').remove
       @doc.search('script.managed').remove
       File.open output_file, 'w' do |outfile|
-        outfile.write @doc.to_s.gsub(/^\s*$\n/,'')
+        outfile.write @doc.to_original_html.gsub(/^\s*$\n/,'')
       end
       
       ## this code does document processing with Nokogiri, but I'm not happy with 

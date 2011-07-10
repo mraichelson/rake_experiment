@@ -19,7 +19,16 @@ Todo:
 
 * Installation/setup documentation
 
+## Known issues
+
+* The HTML validation provided by the w3c_validator gem returns an error object where all the property values are null. So I can't identify actual specific errors from the command line, only identify that the file as a whole fails validation.
+* Can't colorize the output of some tasks since (most notably BUILD:CSS, BUILD:JS, TEST:JS) since they're really wrappers around command line calls (Juicer didn't have any documentation around using it from within a ruby script.)
+
 ## Installation
+
+### Terminal configuration
+
+In Terminal open the Preferences pane. Go to Settings > Text and check the "Display ANSI colors" checkbox. (This isn't _strictly_ necessary, but without it you don't get pretty colors to help show what's going on.)
 
 ### Third-party applications
 
@@ -54,7 +63,7 @@ Rake tutorials
 
 ## Installation on windows
 
-The image tasks can't be used on windows. (There's no ImageOptim and the rsync options have all been pretty mediocre so far.)
+The image tasks can't be used on windows. (There's no ImageOptim and the rsync options have all been pretty mediocre so far.) It's possible to find workarounds to tie into software that would run on windows, but since none of our FE devs use windows as anything but a browser testing platform I didn't figure it was worth the effort right now. 
 
 * [Ruby 1.8.7](http://rubyinstaller.org/downloads/)
 * [Ruby DevKit](http://rubyinstaller.org/downloads/)
