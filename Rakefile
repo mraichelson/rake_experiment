@@ -1,10 +1,10 @@
 ##
 # Some project level configuration is stored in CONFIG.YML
 # Version History
+# => 0.2 Internal testing version (2011-07-09)
 # => 0.1 Internal testing version (2011-07-07)
 ##
 require 'rubygems'
-# require 'nokogiri'
 require 'hpricot'
 require 'w3c_validators'
 require 'yaml'
