@@ -4,7 +4,8 @@
 # => 0.1 Internal testing version (2011-07-07)
 ##
 require 'rubygems'
-require 'nokogiri'
+# require 'nokogiri'
+require 'hpricot'
 require 'w3c_validators'
 require 'yaml'
 require 'colorize'
@@ -35,22 +36,36 @@ namespace :build do
       input_file = file
       output_file = file.sub($config['html']['source'], $config['html']['export'])
       puts "    +-> ".green + "Building " + "#{input_file}".yellow + " to " + "#{output_file}".green
+      
+      ## let's try document parsing with hpricot instead. 
       f = File.open(input_file)
-      @doc = Nokogiri::HTML(f)
-      f.close
-      #remove managed CSS files
-      managed_styles = @doc.css('link.managed')
-      managed_styles.remove
-      # remove managed JS files
-      managed_scripts = @doc.css('script.managed')
-      managed_scripts.remove
-      # nokogiri adds an additional META for content-type
-      extra_meta = @doc.css('meta[http-equiv = "Content-Type"]')
-      #extra_meta = @doc.css('head meta[http-equiv]')
-      extra_meta.remove
+      @doc = Hpricot(f)
+      @doc.search('link.managed').remove
+      @doc.search('script.managed').remove
       File.open output_file, 'w' do |outfile|
-        outfile.write @doc.to_html(:indent => 2)
+        outfile.write @doc.to_s.gsub(/^\s*$\n/,'')
       end
+      
+      ## this code does document processing with Nokogiri, but I'm not happy with 
+      ## the things it's doing with the HTML output. (not preserving indentation
+      ## properly, adding an additional META tag for UTF-8 encoding in addition to 
+      ## the HTML5 one which is already in place in the source file.)
+      #       f = File.open(input_file)
+      #       @doc = Nokogiri::HTML(f)
+      #       f.close
+      #       #remove managed CSS files
+      #       managed_styles = @doc.css('link.managed')
+      #       managed_styles.remove
+      #       # remove managed JS files
+      #       managed_scripts = @doc.css('script.managed')
+      #       managed_scripts.remove
+      #       # nokogiri adds an additional META for content-type
+      #       extra_meta = @doc.css('meta[http-equiv = "Content-Type"]')
+      #       extra_meta.remove
+      #       File.open output_file, 'w' do |outfile|
+      #         outfile.write @doc.to_html
+      #       end
+      
     }
   end # end BUILD:HTML
   

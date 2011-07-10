@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+<!doctype html>
 <html lang="en-US">
 <head>
   <meta charset="UTF-8">
@@ -14,14 +14,17 @@
   <div id="doc">
     <div id="header">
       <h1>Page title</h1>
-    </div>
+    </div><!-- /#header -->
     <div id="body">
-      <div id="rail" class="railLeft">left rail</div>
-      <div id="contentMain">main content</div>
-      <div id="rail" class="railRight">right rail</div>
-    </div>
-    <div id="footer">footer</div>
-  </div>
+      <div class="rail" id="railLeft">left rail</div><!-- /#rail.railLeft -->
+      <div id="contentMain">
+        <p>main content</p>
+        <video src="../video/foo.m4v">video content placeholder</video>
+      </div><!-- /#contentMain -->
+      <div class="rail" id="railRight">right rail</div><!-- /#rail.railRight -->
+    </div><!-- /#body -->
+    <div id="footer">footer</div><!-- /#footer -->
+  </div><!-- /#doc -->
   <script type="text/javascript" src="../js/body.js"></script>
 </body>
 </html>
