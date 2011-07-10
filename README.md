@@ -4,7 +4,7 @@
 
 * Merge and compress JS files. (does this! using Juicer)
 * Merge and compress CSS files. (does this! using Juicer)
-* Remove and/or rewrite excess CSS/JS file references used in HTML files. (does this! using Nokogiri)
+* Remove and/or rewrite excess CSS/JS file references used in HTML files. (does this! using Hpricot)
 * Test CSS files for W3c validation. (does this! using W3c_validators)
 * Test JS files using JSLint. (does this! using Juicer)
 * Test HTML files for W3c validation. (does this! using W3c_validators)
@@ -33,7 +33,7 @@ gem install syntax: `sudo gem install {gem name}`
 
 * [Rake](http://rubyrake.org/)
 * [Juicer](https://github.com/cjohansen/juicer)
-* [Nokogiri](http://nokogiri.org/)
+* [Hpricot](http://hpricot.com/)
 * [W3c_validators](http://code.dunae.ca/w3c_validators/)
 * [Colorize](http://colorize.rubyforge.org/)
 * Json (used by the W3c validators gem)
