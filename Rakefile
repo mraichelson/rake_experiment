@@ -196,6 +196,7 @@ namespace :svn do
     this_tag = 'FE_' + the_time.strftime('%Y-%m-%dT%H%M')
     tag_loc = $config['svn']['repo'] + 'tags/' + this_tag
     `svn copy #{build_loc} #{tag_loc} -m 'FE Build Script Autotag'`
+    puts "    +-> New tag is #{this_tag}".green
   end # end SVN:TAG
 end # end of SVN tasks
 
@@ -209,6 +210,7 @@ namespace :git do
     the_time = Time.now
     this_tag = "FE_" + the_time.strftime('%Y-%m-%dT%H%M')
     `git tag #{this_tag}`
+    puts "    +-> New tag is #{this_tag}".green
   end # end GIT:TAG
 end #end of GIT tasks
 
