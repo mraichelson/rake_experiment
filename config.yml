@@ -19,7 +19,7 @@ images:
   source: _dev/img/
   export: _build/img/
 stylesheets:
-  source: _dev/css/ 
+  source: _dev/css/
   export: _build/css/
   manage:
   - project.css
