@@ -207,8 +207,8 @@ namespace :svn do
     puts             ''
     puts             '    Please enter a commit message to describe what this tag is for.'
     puts             '    (No single quotes/apostrophes, thanks.)'
-    puts             ''
     puts             '    (If no message is specified "' + default_commit_msg + '" will be used.)'
+    puts             ''
     commit_msg = ask('    Commit Message:'.yellow + ' ')
     puts             ''
 
