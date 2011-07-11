@@ -1,6 +1,7 @@
 ##
 # Some project level configuration is stored in CONFIG.YML
 # Version History
+# => 0.3 Internal testing version (2011-07-11)
 # => 0.2 Internal testing version (2011-07-09)
 # => 0.1 Internal testing version (2011-07-07)
 ##
@@ -18,7 +19,7 @@ namespace :build do
   desc 'Merge and compress CSS files'
   task :css do
     puts ''
-    puts ' => Merging and Compressing CSS files.'.blue.on_white
+    puts ' => Merging and Compressing CSS files. '.blue.on_white
     puts ''
     $config['stylesheets']['manage'].each { |file|
       source_path = $config['stylesheets']['source']
@@ -32,7 +33,7 @@ namespace :build do
   desc 'Build HTML files from Source'
   task :html do
     puts ''
-    puts ' => Building HTML files.'.blue.on_white
+    puts ' => Building HTML files. '.blue.on_white
     puts ''
     file_path = $config['html']['source']
     Dir[file_path + '*.html'].each { |file|
@@ -53,7 +54,7 @@ namespace :build do
   desc 'Merge and compress JS files'
   task :js do
     puts ''
-    puts ' => Merging and Compressing JS files.'.blue.on_white
+    puts ' => Merging and Compressing JS files. '.blue.on_white
     puts ''
     $config['scripts']['manage'].each { |file|
       source_path = $config['scripts']['source']
@@ -68,7 +69,7 @@ namespace :build do
   desc 'Perform all Front-End build tasks'
   task :all => [:css, :html, :js] do
     puts ''
-    puts ' => Performed all Build tasks.'.blue.on_green
+    puts ' => Performed all Build tasks. '.blue.on_green
     puts '    (You did TEST first, right?)'.yellow
     puts '    (Should you be running IMG:SYNC too?)'.yellow
     puts ''
@@ -80,7 +81,7 @@ namespace :test do
   desc 'Test CSS files with W3c validator'
   task :css do
     puts ''
-    puts ' => Testing CSS files with W3c validator.'.blue.on_white
+    puts ' => Testing CSS files with W3c validator. '.blue.on_white
     puts ''
     $config['stylesheets']['validate'].each { |file_to_test|
       file_path = $config['stylesheets']['source']
@@ -106,7 +107,7 @@ namespace :test do
   desc "Test HTML files with W3c validator."
   task :html do
     puts ''
-    puts ' => Testing HTML files with W3c validator.'.blue.on_white
+    puts ' => Testing HTML files with W3c validator. '.blue.on_white
     puts ''
     file_path = $config['html']['source']
     Dir[file_path + '*.html'].each { |file_to_test| 
@@ -129,7 +130,7 @@ namespace :test do
   desc 'Test JS files with JSLint'
   task :js do
     puts ''
-    puts ' => Testing JS files with JSLint.'.blue.on_white
+    puts ' => Testing JS files with JSLint. '.blue.on_white
     puts ''
     $config['scripts']['jslint'].each { |file_to_test|
       file_to_test = $config['scripts']['source'] + file_to_test
@@ -145,7 +146,7 @@ namespace :test do
   desc 'Perform all Test tasks'
   task :all => [:css, :html, :js] do 
     puts ''
-    puts ' => Performed all Test tasks.'.blue.on_green
+    puts ' => Performed all Test tasks. '.blue.on_green
     puts ''
   end # end TEST:ALL
 end # end of TEST tasks
@@ -155,7 +156,7 @@ namespace :img do
   desc 'Compress image files with ImageOptim'
   task :compress do
     puts ''
-    puts ' => Launching ImageOptim to compress image files.'.blue.on_white
+    puts ' => Launching ImageOptim to compress image files. '.blue.on_white
     puts ''
     cmd = 'open -a ImageOptim.app ' + $config['images']['source']
     `#{cmd}`
@@ -164,7 +165,7 @@ namespace :img do
   desc "Sync image directory from DEV to BUILD"
   task :sync do
     puts ''
-    puts ' => Syncing DEV images to BUILD images'.blue.on_white
+    puts ' => Syncing DEV images to BUILD images '.blue.on_white
     puts ''
     source = $config['images']['source']
     export = $config['images']['export']
@@ -175,7 +176,7 @@ namespace :img do
   desc "Reverse sync image directory from BUILD to DEV"
   task :backsync do
     puts ''
-    puts ' => Syncing BUILD images to DEV images'.blue.on_white
+    puts ' => Syncing BUILD images to DEV images '.blue.on_white
     puts ''
     source = $config['images']['export']
     export = $config['images']['source']
@@ -189,14 +190,39 @@ namespace :svn do
   desc "Create a new tagged release in Subversion"
   task :tag do
     puts ''
-    puts ' => Creating new SVN Tag for this release.'.blue.on_white
-    puts ''
-    build_loc = $config['svn']['repo'] + $config['svn']['path'] + $config['svn']['export']
+    puts ' => Creating new SVN Tag for this release. '.blue.on_white
     the_time = Time.now
     this_tag = 'FE_' + the_time.strftime('%Y-%m-%dT%H%M')
-    tag_loc = $config['svn']['repo'] + 'tags/' + this_tag
-    `svn copy #{build_loc} #{tag_loc} -m 'FE Build Script Autotag'`
-    puts "    +-> New tag is #{this_tag}".green
+    tag_url_source = $config['svn']['repo'] + $config['svn']['path'] + $config['svn']['export']
+    tag_url_base = $config['svn']['repo'] + $config['svn']['path'] + 'tags/'
+    default_commit_msg = 'FE Build Script Autotag'
+    
+    # gather user input...
+    puts             ''
+    puts             '    Please enter a folder name for the tag to use.'
+    puts             '    (No special characters, a-z/A-Z/0-9/-/_ only, thanks.)'
+    puts             '    (If no folder is specified ' + this_tag + ' will be used.)'
+    puts             ''
+    tag_path =   ask('    Folder Name:'.yellow + ' ')
+    puts             ''
+    puts             '    Please enter a commit message to describe what this tag is for.'
+    puts             '    (No single quotes/apostrophes, thanks.)'
+    puts             ''
+    puts             '    (If no message is specified "' + default_commit_msg + '" will be used.)'
+    commit_msg = ask('    Commit Message:'.yellow + ' ')
+    puts             ''
+
+    if !tag_path.empty?
+      this_tag = tag_path
+    end
+    if commit_msg.empty?
+      commit_msg = default_commit_msg
+    end
+    tag_url_target = tag_url_base + this_tag
+
+    `svn copy #{tag_url_source} #{tag_url_target} -m '#{commit_msg}'`
+    puts '    +-> New tag created'.green
+    puts ''
   end # end SVN:TAG
 end # end of SVN tasks
 
@@ -205,7 +231,7 @@ namespace :git do
   desc "Create a new tagged release in Git"
   task :tag do
     puts ''
-    puts ' => Creating new Git Tag for this release.'.blue.on_white
+    puts ' => Creating new Git Tag for this release. '.blue.on_white
     puts ''
     the_time = Time.now
     this_tag = "FE_" + the_time.strftime('%Y-%m-%dT%H%M')
@@ -233,3 +259,11 @@ task :help do
 end # end of HELP
 
 task :default => "help"
+
+### helpers
+# lifted from https://github.com/cloudhead/dorothy 
+# (Rakefile for the Toto blogging engine)
+def ask message
+  print message
+  STDIN.gets.chomp
+end
