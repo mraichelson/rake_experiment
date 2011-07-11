@@ -200,7 +200,7 @@ namespace :svn do
     # gather user input...
     puts             ''
     puts             '    Please enter a folder name for the tag to use.'
-    puts             '    (No special characters, a-z/A-Z/0-9/-/_ only, thanks.)'
+    puts             '    (No special characters, no spaces, a-z/A-Z/0-9/-/_ only, thanks.)'
     puts             '    (If no folder is specified ' + this_tag + ' will be used.)'
     puts             ''
     tag_path =   ask('    Folder Name:'.yellow + ' ')
@@ -235,8 +235,20 @@ namespace :git do
     puts ''
     the_time = Time.now
     this_tag = "FE_" + the_time.strftime('%Y-%m-%dT%H%M')
+    
+    puts           '    Please enter a name for this tag.'
+    puts           '    (No special characters, no spaces, a-z/A-Z/0-9/-/_ only, thanks.)'
+    puts           '    (If no name is specified ' + this_tag + ' will be used.)'
+    puts           ''
+    tag_name = ask('    Tag Name:'.yellow+' ')
+    puts           ''
+    
+    if !tag_name.empty?
+      this_tag = tag_name
+    end
+    
     `git tag #{this_tag}`
-    puts "    +-> New tag is #{this_tag}".green
+    puts "    +-> New tag is '#{this_tag}'".green
   end # end GIT:TAG
 end #end of GIT tasks
 
