@@ -194,7 +194,7 @@ namespace :svn do
     the_time = Time.now
     this_tag = 'FE_' + the_time.strftime('%Y-%m-%dT%H%M')
     tag_url_source = $config['svn']['repo'] + $config['svn']['path'] + $config['svn']['export']
-    tag_url_base = $config['svn']['repo'] + $config['svn']['path'] + 'tags/'
+    tag_url_base = $config['svn']['repo'] + 'tags/'
     default_commit_msg = 'FE Build Script Autotag'
     
     # gather user input...
