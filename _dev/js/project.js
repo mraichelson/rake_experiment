@@ -5,7 +5,7 @@
  * File preamble, License, etc.
  * @author X McY <xy@z.a>
  */
-/*jslint nomen: true, sloppy: true, maxerr: 50, indent: 2 */
+/*jslint nomen:true, sloppy:true, maxerr:50, indent:2 */
 /*global $:true, jQuery:true */
 
 var Project = this.Project || {};

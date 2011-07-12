@@ -22,7 +22,7 @@ Todo:
 ## Known issues
 
 * The HTML validation provided by the w3c_validator gem returns an error object where all the property values are null. So I can't identify actual specific errors from the command line, only identify that the file as a whole fails validation.
-* Can't colorize the output of some tasks since (most notably BUILD:CSS, BUILD:JS, TEST:JS) since they're really wrappers around command line calls (Juicer didn't have any documentation around using it from within a ruby script.)
+* Can't colorize the output of some tasks since (most notably TEST:JS) since they're really wrappers around command line calls (Juicer didn't have any documentation around using it from within a ruby script.)
 
 ## Installation
 

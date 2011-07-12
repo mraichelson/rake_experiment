@@ -70,6 +70,7 @@ namespace :build do
   task :all => [:css, :html, :js] do
     puts ''
     puts ' => Performed all Build tasks. '.blue.on_green
+    puts ''
     puts '    (You did TEST first, right?)'.yellow
     puts '    (Should you be running IMG:SYNC too?)'.yellow
     puts ''
@@ -249,6 +250,7 @@ namespace :git do
     
     `git tag #{this_tag}`
     puts "    +-> New tag is '#{this_tag}'".green
+    puts ''
   end # end GIT:TAG
 end #end of GIT tasks
 
