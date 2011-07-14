@@ -40,13 +40,13 @@ In Terminal open the Preferences pane. Go to Settings > Text and check the "Disp
 
 gem install syntax: `sudo gem install {gem name}`
 
-* [Rake](http://rubyrake.org/)
-* [Juicer](https://github.com/cjohansen/juicer)
-* [Hpricot](http://hpricot.com/)
-* [W3c_validators](http://code.dunae.ca/w3c_validators/)
-* [Colorize](http://colorize.rubyforge.org/)
-* Json (used by the W3c validators gem)
-* Yaml (Yaml is installed by default with Ruby, it does not need to be downloaded.)
+* [rake](http://rubyrake.org/)
+* [juicer](https://github.com/cjohansen/juicer)
+* [hpricot](http://hpricot.com/)
+* [w3c_validators](http://code.dunae.ca/w3c_validators/)
+* [colorize](http://colorize.rubyforge.org/)
+* json (used by the W3c validators gem)
+* Yaml (Yaml is installed by default with Ruby, you do not need to use GEM to install it.)
 
 ### Juicer config... 
 
