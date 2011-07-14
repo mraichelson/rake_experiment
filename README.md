@@ -34,6 +34,12 @@ In Terminal open the Preferences pane. Go to Settings > Text and check the "Disp
 
 * [ImageOptim](http://imageoptim.pornel.net/) (used for image compression)
 
+### Update the Ruby Gem package manager
+
+Just to make sure that it's up to date and will look for all the current repository locations to pull gems from, run the following command from Terminal. 
+
+`sudo gem update --system`
+
 ### Ruby gems
 
 (this only needs to be done the FIRST TIME you set this up on your system)
