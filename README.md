@@ -59,6 +59,11 @@ gem install syntax: `sudo gem install {gem name}`
 * `juicer install yui_compressor`
 * `juicer install jslint`
 
+### Get down to it, yo...
+
+Navigate to your project directory, and type `rake`. 
+
+
 ## External docs that may be of use
 
 Rake tutorials
