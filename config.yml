@@ -24,8 +24,10 @@ stylesheets:
   export: _build/css/
   manage:
   - project.css
+  - print.css
   validate: 
   - project.css
+  - print.css
 scripts: 
   source: _dev/js/
   export: _build/js/
