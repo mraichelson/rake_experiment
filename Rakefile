@@ -1,6 +1,9 @@
 ##
 # Some project level configuration is stored in CONFIG.YML
 # Version History
+# => 0.4 Internal feedback revisions: RAKE SETUP now will check for the presence of the 
+#    directory structures identified in CONFIG.YML and create them if they are not
+#    present relative to the Rakefile. (2011-07-16)
 # => 0.3 Internal testing version (2011-07-11)
 # => 0.2 Internal testing version (2011-07-09)
 # => 0.1 Internal testing version (2011-07-07)

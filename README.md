@@ -61,8 +61,9 @@ gem install syntax: `sudo gem install {gem name}`
 
 ### Get down to it, yo...
 
-Navigate to your project directory, and type `rake`. 
+Navigate to your project directory, and type `rake` to get a list of commands.
 
+Use `rake setup` to check the presence of and generate (if necessary) the directory structure that you identified in CONFIG.YML for your project.
 
 ## External docs that may be of use
 
