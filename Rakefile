@@ -21,9 +21,9 @@ namespace :build do
     puts ''
     puts ' => Merging and Compressing CSS files. '.blue.on_white
     puts ''
+    source_path = $config['stylesheets']['source']
+    build_path  = $config['stylesheets']['export']
     $config['stylesheets']['manage'].each { |file|
-      source_path = $config['stylesheets']['source']
-      build_path  = $config['stylesheets']['export']
       puts "    +-> ".green + "Building " + "#{source_path}#{file}".yellow + " to " + "#{build_path}#{file}".green
       `juicer merge #{source_path}#{file} -o #{build_path}#{file} --force`
     }
@@ -258,11 +258,65 @@ end #end of GIT tasks
 desc "Explain what needs to happen to properly install the Rakefile."
 task :setup do
   puts ''
-  puts ' => Hold on, forwarding you to the install instructions.     '.blue.on_white
-  puts '    (You need to be in the office or on the VPN for this...) '.blue.on_white
+  puts ' => Checking directory structure, if not present it will be  '.blue.on_white
+  puts '    created according to CONFIG.YML                          '.blue.on_white
+  
+  if !File.directory?($config['svn']['source'])
+    puts ''
+    puts '    x-> No SOURCE directory present, creating it now.'.red
+    Dir.mkdir($config['svn']['source'])
+  else
+    puts ''
+    puts '    +-> SOURCE directory present'.green
+  end
+  if !File.directory?($config['html']['source'])
+    puts '        x-> No HTML source directory present, creating it now.'.red
+    Dir.mkdir($config['html']['source'])
+  end
+  if !File.directory?($config['images']['source'])
+    puts '        x-> No IMAGES source directory present, creating it now.'.red
+    Dir.mkdir($config['images']['source'])
+  end
+  if !File.directory?($config['stylesheets']['source'])
+    puts '        x-> No STYLESHEETS source directory present, creating it now.'.red
+    Dir.mkdir($config['stylesheets']['source'])
+  end
+  if !File.directory?($config['scripts']['source'])
+    puts '        x-> No SCRIPTS source directory present, creating it now.'.red
+    Dir.mkdir($config['scripts']['source'])
+  end
+  
+  if !File.directory?($config['svn']['export'])
+    puts ''
+    puts '    x-> No BUILD directory present, creating it now.'.red
+    Dir.mkdir($config['svn']['export'])
+  else
+    puts ''
+    puts '    +-> BUILD directory present'.green
+  end
+  if !File.directory?($config['html']['export'])
+    puts '        x-> No HTML build directory present, creating it now.'.red
+    Dir.mkdir($config['html']['export'])
+  end
+  if !File.directory?($config['images']['export'])
+    puts '        x-> No IMAGES build directory present, creating it now.'.red
+    Dir.mkdir($config['images']['export'])
+  end
+  if !File.directory?($config['stylesheets']['export'])
+    puts '        x-> No STYLESHEETS build directory present, creating it now.'.red
+    Dir.mkdir($config['stylesheets']['export'])
+  end
+  if !File.directory?($config['scripts']['export'])
+    puts '        x-> No SCRIPTS build directory present, creating it now.'.red
+    Dir.mkdir($config['scripts']['export'])
+  end
+  
+  # puts ''
+  # puts ' => Hold on, forwarding you to the install instructions.     '.blue.on_white
+  # puts '    (You need to be in the office or on the VPN for this...) '.blue.on_white
+  # puts ''
+  # `open https://www.github.com/mraichelson/rake_experiment`
   puts ''
-  # `open http://km.dev.navarts.local/wiki`
-  `open https://www.github.com/mraichelson/rake_experiment`
 end # end SETUP
 
 desc "Output a list of Rake tasks"
