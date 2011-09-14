@@ -1,6 +1,10 @@
 ##
 # Some project level configuration is stored in CONFIG.YML
 # Version History
+# => 0.5 : Multiple revisions (2011-09-13)
+#    * Bug Fix: use RegEx on the output from Juicer for url() values in CSS to fix the 
+#      paths to images, etc. (It's being overly helpful)
+#    * Internal feedback: added $BuildDate$ token replacement in HTML/CSS/JS files.
 # => 0.4 Internal feedback revisions: RAKE SETUP now will check for the presence of the 
 #    directory structures identified in CONFIG.YML and create them if they are not
 #    present relative to the Rakefile. (2011-07-16)
@@ -29,6 +33,15 @@ namespace :build do
     $config['stylesheets']['manage'].each { |file|
       puts "    +-> ".green + "Building " + "#{source_path}#{file}".yellow + " to " + "#{build_path}#{file}".green
       `juicer merge #{source_path}#{file} -o #{build_path}#{file} --force`
+      the_file = build_path + file
+      the_time = Time.now
+      replace_path = '../' + $config['svn']['source'] 
+      new_file = File.open(the_file, 'r') { |f|
+        f.read.gsub(replace_path, '').gsub('$BuildDate$', the_time.strftime('%Y-%m-%dT%H%M'))
+      }
+      File.open(the_file, 'w+') { |f|
+        f.puts new_file
+      }
     }
     puts ''
   end # end BUILD:CSS
@@ -48,7 +61,10 @@ namespace :build do
       @doc.search('link.managed').remove
       @doc.search('script.managed').remove
       File.open output_file, 'w' do |outfile|
-        outfile.write @doc.to_original_html.gsub(/^\s*$\n/,'')
+        # strip any lines of only whitespace
+        # replace our $BuildDate$ token with the date and time of the build.
+        the_time = Time.now
+        outfile.write @doc.to_original_html.gsub(/^\s*$\n/,'').gsub('$BuildDate$', the_time.strftime('%Y-%m-%dT%H%M'))
       end
     }
     puts ''
@@ -65,6 +81,14 @@ namespace :build do
       puts "    +-> ".green + "Building " + "#{source_path}#{file}".yellow + " to " + "#{build_path}#{file}".green
       # -s flag skips JSLint verification before merging...
       `juicer merge -s #{source_path}#{file} -o #{build_path}#{file} --force`
+      the_file = build_path + file
+      the_time = Time.now
+      new_file = File.open(the_file, 'r') { |f|
+        f.read.gsub('$BuildDate$', the_time.strftime('%Y-%m-%dT%H%M'))
+      }
+      File.open(the_file, 'w+') { |f|
+        f.puts new_file
+      }
     }
     puts ''
   end # end BUILD:JS
