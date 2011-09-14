@@ -14,6 +14,7 @@
   * Git (does this!)
 * Provide a hook into ImageOptim for triggering compression of image files. (does this!)
 * Will clone the images directory from the dev structure into the build structure. (does this!)
+* Replaces the token $BuildDate$ in HTML, CSS and JS files with a date/time stamp for when the last build was performed. (v0.5)
 
 Todo: 
 
