@@ -1,6 +1,8 @@
 ##
 # Some project level configuration is stored in CONFIG.YML
 # Version History
+# => 0.6 Set BUILD:CSS to explicitly NOT use cache busting strings. (These were being
+#    added intermittently in some environments.)
 # => 0.5 : Multiple revisions (2011-09-13)
 #    * Bug Fix: use RegEx on the output from Juicer for url() values in CSS to fix the 
 #      paths to images, etc. (It's being overly helpful)
@@ -32,7 +34,7 @@ namespace :build do
     build_path  = $config['stylesheets']['export']
     $config['stylesheets']['manage'].each { |file|
       puts "    +-> ".green + "Building " + "#{source_path}#{file}".yellow + " to " + "#{build_path}#{file}".green
-      `juicer merge #{source_path}#{file} -o #{build_path}#{file} --force`
+      `juicer merge #{source_path}#{file} -o #{build_path}#{file} -c none --force`
       the_file = build_path + file
       the_time = Time.now
       replace_path = '../' + $config['svn']['source'] 
