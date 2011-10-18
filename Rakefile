@@ -1,6 +1,7 @@
 ##
 # Some project level configuration is stored in CONFIG.YML
 # Version History
+# => 0.7 Added DOCS:SYNC and DOCS:BACKSYNC for controlling documentation syncing.
 # => 0.6 Set BUILD:CSS to explicitly NOT use cache busting strings. (These were being
 #    added intermittently in some environments.)
 # => 0.5 : Multiple revisions (2011-09-13)
@@ -214,6 +215,31 @@ namespace :img do
     `#{cmd}`
   end # end of IMG:BACKSYNC
 end # end of IMG tasks
+
+# documentation syncing tasks
+namespace :docs do
+  desc "Sync Docs directory from DEV to BUILD"
+  task :sync do
+    puts ''
+    puts ' => Syncing Documentation from DEV to BUILD.'.blue.on_white
+    puts ''
+    source = $config['docs']['source']
+    export = $config['docs']['export']
+    cmd = "rsync -aC #{source} #{export}" #rsync for two local paths. WHO KNEW? 
+    `#{cmd}`
+  end # end of DOCS:SYNC
+  
+  desc "Reverse sync Docs directory from BUILD to DEV"
+  task :backsync do
+    puts ''
+    puts ' => Syncing Documentation from BUILD to DEV.'.blue.on_white
+    puts ''
+    source = $config['docs']['export']
+    export = $config['docs']['source']
+    cmd = "rsync -aC #{source} #{export}" #rsync for two local paths. WHO KNEW? 
+    `#{cmd}`
+  end # end of DOCS:BACKSYNC
+end # end of documentation tasks
 
 # version control tasks for Subversion
 namespace :svn do

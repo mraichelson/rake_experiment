@@ -3,6 +3,7 @@
 # There's a lot of duplication in here, I'd like to find a way to simplify things in the future. -MR
 #
 # Version History
+# => 0.7 Documentation paths added for DOCS:SYNC and DOCS:BACKSYNC.
 # => 0.4 Internal feedback revisions: RAKE SETUP now will check for the presence of the 
 #    directory structures identified in CONFIG.YML and create them if they are not
 #    present relative to the Rakefile. (2011-07-16)
@@ -22,6 +23,9 @@ html:
 images:
   source: _dev/img/
   export: _build/img/
+docs:
+  source: _dev/docs/
+  export: _build/docs/
 stylesheets:
   source: _dev/css/
   export: _build/css/
