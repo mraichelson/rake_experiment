@@ -1,6 +1,7 @@
 /*!
  *  Preamble, License info, Etc.
  *  @author X Y <xy@z.ab> 
+ *  @build $BuildDate$
  */
 @import "reset.css";
 @import "text.css";
@@ -12,3 +13,5 @@ body,html {
 }
 a { color:#fff; }
 #123a { blerg:$13; }
+
+foo { background-image:url(../images/foo.png); }
